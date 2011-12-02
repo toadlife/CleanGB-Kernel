@@ -53,8 +53,8 @@ DEFCONFIG_STRING=victory_8G_defconfig
 
 #TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
 #TOOLCHAIN_PREFIX=arm-linux-androideabi-
-TOOLCHAIN=/home/paul/myandroid/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin
-TOOLCHAIN_PREFIX=arm-eabi-
+TOOLCHAIN=/home/paul/CodeSourcery/Sourcery_G++_Lite/bin
+TOOLCHAIN_PREFIX=arm-none-eabi-
 
 KERNEL_BUILD_DIR=`pwd`/Kernel
 ANDROID_OUT_DIR=`pwd`/Android/out/target/product/SPH-D700
