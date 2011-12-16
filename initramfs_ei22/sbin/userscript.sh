@@ -22,6 +22,7 @@ busybox rm /sbin/su
 
 #Remove superuser.apk
 rm /system/app/Superuser.apk
+rm /data/app/Superuser.apk
 busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
 
 # Install Superuser.apk (only if not installed)
