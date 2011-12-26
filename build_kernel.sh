@@ -32,6 +32,9 @@ case "$1" in
 			make clean V=1 ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.clean.out
 			make distclean 2>&1 | tee make.distclean.out
 		popd
+		rm -f `pwd`/zImage
+		rm -f `pwd`/boot.img
+		rm -f `pwd`/Kernel/*.out
 		echo " distclean is done... "
 		exit
 		;;
@@ -95,6 +98,8 @@ CLEAN_ZIMAGE()
 	echo "* Removing old zImage                                      *"
 	echo "************************************************************"
 	rm -f `pwd`/Kernel/arch/arm/boot/zImage
+	rm -f `pwd`/zImage
+	rm -f `pwd`/boot.img
 	echo "* zImage removed"
 	echo "************************************************************"
 	echo
@@ -112,6 +117,18 @@ BUILD_KERNEL()
 #		make -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX
 		make V=1 -j$CPU_JOB_NUM ARCH=arm CROSS_COMPILE=$TOOLCHAIN/$TOOLCHAIN_PREFIX 2>&1 | tee make.out
 	popd
+}
+
+BUILD_BOOTIMAGE ()
+{
+	echo "************************************************************"
+	echo "* BUILD_BOOTIMAGE                                            *"
+	echo "************************************************************"
+	cp ./Kernel/arch/arm/boot/zImage ./zImage
+	./create_boot.img.sh tw
+	echo "* Boot image built"
+	echo "************************************************************"
+	echo
 }
 
 # print title
@@ -151,6 +168,7 @@ PRINT_TITLE
 #BUILD_MODULE
 CLEAN_ZIMAGE
 BUILD_KERNEL
+BUILD_BOOTIMAGE
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"
 echo "Total compile time is $ELAPSED_TIME seconds"
