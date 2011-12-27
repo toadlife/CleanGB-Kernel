@@ -400,9 +400,6 @@ on post-fs
     chown system input /sys/class/input/input9/wake
     chown system input /dev/i2c-1
 
-    # Run sysinit for cm stuffs
-    #exec /system/bin/sysinit
-
 on boot
 # basic network init
     ifup lo
@@ -769,24 +766,17 @@ service pppd_cdma /system/bin/pppd_runner
     group radio cache inet misc system
     oneshot
 
-# Custom Script Configuration
-service userscript /system/bin/sh /bin/userscript.sh
-	user root
-	group system
-	critical	
-	oneshot
-
 service bootanim /system/bin/bootanimation
-	user graphics
-	group graphics
-	critical
-	oneshot
+    user graphics
+    group graphics
+    critical
+    oneshot
 
 service initd /system/bin/sysinit
-	user root
-	group system
-	critical
-	oneshot
+    user root
+    group system
+    critical
+    oneshot
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     socket zygote stream 666
