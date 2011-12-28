@@ -350,9 +350,7 @@ on post-fs
     # create data/gps for GPS daemon
     mkdir /data/gps 771 gps system
     chown gps system /data/gps
-    #Set gpsd permissions
-    chmod 0777 /system/vendor/bin/gpsd
-
+    
 # for sensor control
     chown system input /sys/class/input/input0/enable
     chown system input /sys/class/input/input0/delay
@@ -900,10 +898,10 @@ service orientationd /system/bin/orientationd
 service geomagneticd /system/bin/geomagneticd
     user compass
     group system input
-    
+
 service gps-daemon /system/vendor/bin/gpsd
-	user system
-	group system inet
+    user system
+    group system inet
 
 #end of PCInternet share
 # [Yagya for Victory WiMAX DHCP 20100208
