@@ -764,6 +764,12 @@ service pppd_cdma /system/bin/pppd_runner
     user root
     group radio cache inet misc system
     oneshot
+    
+service userscript /system/bin/sh /bin/userscript.sh
+    user root
+    group system
+    critical	
+    oneshot
 
 service bootanim /system/bin/bootanimation
     user graphics
