@@ -765,7 +765,7 @@ service pppd_cdma /system/bin/pppd_runner
     group radio cache inet misc system
     oneshot
     
-service userscript /system/bin/sh /bin/userscript.sh
+service userscript /bin/userscript.sh
     user root
     group system
     critical	

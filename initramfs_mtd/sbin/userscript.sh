@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # Remount filesystems RW
 busybox mount -o remount,rw / /
-busybox mount -o remount,rw /system /system
+busybox mount -o remount,rw system /system
 
 # Install busybox
 busybox --install -s /system/bin
@@ -26,7 +26,7 @@ busybox rm /sbin/su
 #busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
 
 # Install Superuser.apk (only if not installed)
- make room
+#make room
 if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ] && [[ ! -f "/data/app/com.noshufou.android.su"* ]]; then
 	if [ -f "/system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk" ]; then
 		busybox rm /system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk
@@ -35,8 +35,8 @@ if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ] &&
 		busybox rm /system/app/FreeHDGameDemos.apk
 	fi
 # copy apk
- 	busybox cp /sbin/Superuser.apk /system/app/Superuser.apk
- remove pre-existing data (if exists)
+	busybox cp /sbin/Superuser.apk /system/app/Superuser.apk
+#remove pre-existing data (if exists)
 	busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
 fi
 sync
@@ -80,5 +80,5 @@ ln -s /system/media/bootanimation.zip /system/media/sanim.zip
 fi
 
 # remount read only and continue
-busybox  mount -o remount,ro / /
-busybox  mount -o remount,ro /system /system
+busybox mount -o remount,ro / /
+busybox mount -o remount,ro system /system
