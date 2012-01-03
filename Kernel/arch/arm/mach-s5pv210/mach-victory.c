@@ -160,7 +160,7 @@ static int victory_notifier_call(struct notifier_block *this,
 		else if (!strcmp((char *)_cmd, "bml7recovery"))
 			mode = REBOOT_MODE_RECOVERY;
 		else if (!strcmp((char *)_cmd, "bootloader"))
-			mode = REBOOT_MODE_FAST_BOOT;
+			mode = REBOOT_MODE_DOWNLOAD;
 		else if (!strcmp((char *)_cmd, "download"))
 			mode = REBOOT_MODE_DOWNLOAD;
 		else if (!strcmp((char *)_cmd, "factory_reboot"))
@@ -3140,7 +3140,9 @@ static struct platform_device *victory_devices[] __initdata = {
 #ifdef CONFIG_FIQ_DEBUGGER
 	&s5pv210_device_fiqdbg_uart2,
 #endif
-	&s5pc110_device_onenand,
+#ifdef CONFIG_MTD_ONENAND
+    &s5p_device_onenand,
+#endif
 #ifdef CONFIG_RTC_DRV_S3C
 	&s5p_device_rtc,
 #endif
@@ -3259,7 +3261,7 @@ static void __init victory_map_io(void)
 	s3c24xx_init_uarts(victory_uartcfgs, ARRAY_SIZE(victory_uartcfgs));
 	s5p_reserve_bootmem(victory_media_devs, ARRAY_SIZE(victory_media_devs));
 #ifdef CONFIG_MTD_ONENAND
-	s5pc110_device_onenand.name = "s5pc110-onenand";
+	s5p_device_onenand.name = "s5p-onenand";
 #endif
 }
 
@@ -3298,7 +3300,8 @@ static void __init victory_fixup(struct machine_desc *desc,
        	ram_console_start = mi->bank[1].start + mi->bank[1].size;
 	ram_console_size = SZ_1M - SZ_4K;
 #endif
-	pm_debug_scratchpad = ram_console_start + ram_console_size;
+	/* Leave 1K at 0x57fff000 for kexec hardboot page. */
+	pm_debug_scratchpad = ram_console_start + ram_console_size + SZ_1K;
 }
 
 /* this function are used to detect s5pc110 chip version temporally */
