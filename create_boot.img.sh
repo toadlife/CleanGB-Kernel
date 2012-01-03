@@ -51,8 +51,8 @@ function PACKAGE_BOOTIMG()
 #main
 if [ "$1" = "tw" ]; then
 	KERNEL_INITRD="$PWD/initramfs_mtd"
-elif [ "$1" = "cm" ]; then
-	KERNEL_INITRD="$PWD/initramfs_cm7"
+elif [ "$1" = "tw_noroot" ]; then
+	KERNEL_INITRD="$PWD/initramfs_mtd_noroot"
 else
 	echo "usage: $0 <tw|cm>"
 	exit

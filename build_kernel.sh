@@ -53,8 +53,8 @@ TARGET_LOCALE="vzw"
 #uncomment to add custom version string
 #export KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
 
-if [ ! "$2" = "" ]; then
-	DEFCONFIG_STRING=victory_8G_defconfig
+if [ ! $2 ]; then
+	DEFCONFIG_STRING=cleangb_bml_defconfig
 else 
 	DEFCONFIG_STRING=$2
 fi
@@ -131,7 +131,7 @@ BUILD_BOOTIMAGE ()
 	echo "* BUILD_BOOTIMAGE                                            *"
 	echo "************************************************************"
 	cp ./Kernel/arch/arm/boot/zImage ./zImage
-	./create_boot.img.sh tw
+	./create_boot.img.sh $1
 	echo "* Boot image built"
 	echo "************************************************************"
 	echo
@@ -172,10 +172,16 @@ fi
 START_TIME=`date +%s`
 PRINT_TITLE
 #BUILD_MODULE
-CLEAN_ZIMAGE
+CLEAN_ZIMAGEvictory_8G_defconfig
 BUILD_KERNEL
-if [ ! "$3" = "mtd" ]; then
-	BUILD_BOOTIMAGE
+if [ "$3" = "mtd" ]; then
+  if [ "$2" = "cleangb_mtd_noroot_defconfig" ]; then
+	BUILD_BOOTIMAGE tw_noroot
+  else
+	BUILD_BOOTIMAGE tw
+  fi
+else
+  cp ./Kernel/arch/arm/boot/zImage ./zImage
 fi
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"
