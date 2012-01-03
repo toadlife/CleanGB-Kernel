@@ -52,7 +52,13 @@ TARGET_LOCALE="vzw"
 
 #uncomment to add custom version string
 #export KBUILD_BUILD_VERSION="nubernel-EC05_v0.0.0"
-DEFCONFIG_STRING=victory_8G_defconfig
+
+if [ ! "$2" = "" ]; then
+	DEFCONFIG_STRING=victory_8G_defconfig
+else 
+	DEFCONFIG_STRING=$2
+fi
+
 
 #TOOLCHAIN=`pwd`/toolchains/android-toolchain-4.4.3/bin
 #TOOLCHAIN_PREFIX=arm-linux-androideabi-
@@ -168,7 +174,9 @@ PRINT_TITLE
 #BUILD_MODULE
 CLEAN_ZIMAGE
 BUILD_KERNEL
-BUILD_BOOTIMAGE
+if [ ! "$3" = "mtd" ]; then
+	BUILD_BOOTIMAGE
+fi
 END_TIME=`date +%s`
 let "ELAPSED_TIME=$END_TIME-$START_TIME"
 echo "Total compile time is $ELAPSED_TIME seconds"
