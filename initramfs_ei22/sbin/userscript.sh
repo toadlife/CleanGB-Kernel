@@ -7,28 +7,38 @@ busybox mount -o remount,rw /system /system
 busybox --install -s /system/bin
 busybox --install -s /system/xbin
 busybox ln -s /sbin/recovery /system/bin/busybox
-#/system/bin/busybox rm /sbin/busybox
+/system/bin/busybox rm /sbin/busybox
+
+#Remove su binary (remove root)
+busybox rm /system/bin/su
+busybox rm /system/xbin/su
+busybox rm /sbin/su
 
 # Setup su binary
-busybox cp -f /sbin/su /system/bin/su
-chmod 6755 /system/bin/su
-busybox ln -s /system/bin/su /system/xbin/su
-busybox rm /sbin/su
+#busybox cp -f /sbin/su /system/bin/su
+#chmod 6755 /system/bin/su
+#busybox ln -s /system/bin/su /system/xbin/su
+#busybox rm /sbin/su
+
+#Remove superuser.apk
+rm /system/app/Superuser.apk
+rm /data/app/Superuser.apk
+busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
 
 # Install Superuser.apk (only if not installed)
 # make room
-if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ] && [[ ! -f "/data/app/com.noshufou.android.su"* ]]; then
-	if [ -f "/system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk" ]; then
-		busybox rm /system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk
-	fi
-	if [ -f "/system/app/FreeHDGameDemos.apk" ]; then
-		busybox rm /system/app/FreeHDGameDemos.apk
-	fi
-# copy apk
- 	busybox cp /sbin/Superuser.apk /system/app/Superuser.apk
+#if [ ! -f "/system/app/Superuser.apk" ] && [ ! -f "/data/app/Superuser.apk" ] && [[ ! -f "/data/app/com.noshufou.android.su"* ]]; then
+#	if [ -f "/system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk" ]; then
+#		busybox rm /system/app/Asphalt5_DEMO_SAMSUNG_D700_Sprint_ML_330.apk
+#	fi
+#	if [ -f "/system/app/FreeHDGameDemos.apk" ]; then
+#		busybox rm /system/app/FreeHDGameDemos.apk
+#	fi
+## copy apk
+# 	busybox cp /sbin/Superuser.apk /system/app/Superuser.apk
 # remove pre-existing data (if exists)
-	busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
-fi
+#	busybox test -d /data/data/com.noshufou.android.su || busybox rm -r /data/data/com.noshufou.android.su
+#fi
 sync
 
 # Enable init.d support
