@@ -186,7 +186,7 @@ then
 	exit 1
 fi
 
-if [ ! $1 ] || [ ! "$1" = "build" ] || [ ! "$1" = "Clean" ] || [ ! "$1" = "mrproper" ] || [ ! "$1" = "distclean" ]; then
+if [ ! "$1" = "build" ] && [ ! "$1" = "Clean" ] && [ ! "$1" = "mrproper" ] && [ ! "$1" = "distclean" ]; then
 	PRINT_USAGE
 	exit 1
 fi
