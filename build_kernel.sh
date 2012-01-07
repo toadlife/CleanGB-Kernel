@@ -140,9 +140,26 @@ BUILD_BOOTIMAGE ()
 # print title
 PRINT_USAGE()
 {
+	clear
 	echo "************************************************************"
-	echo "* PLEASE TRY AGAIN                                         *"
+	echo "* USAGE                                                    *"
 	echo "************************************************************"
+	echo 
+	echo "./build_kernel.sh command kernel_config [mtd]"
+	echo
+	echo "VALID VALUES FOR command:"
+	echo "************************************************************"
+	echo "build - build the kernel"
+	echo "Clean - clean"
+	echo "mrproper - clean even more"
+	echo "distclean - clean *EVERYTHING*"
+	echo "************************************************************"
+	echo
+	echo "'kernel_config' should be set to which ever kernel config"
+	echo "you want to use."
+	echo
+	echo "adding 'mtd' to the end will cause the script to build a"
+	echo "boot.img file, needed for MTD kernels"
 	echo
 }
 
@@ -169,10 +186,15 @@ then
 	exit 1
 fi
 
+if [ ! $1 ] || [ ! "$1" = "build" ] || [ ! "$1" = "Clean" ] || [ ! "$1" = "mrproper" ] || [ ! "$1" = "distclean" ]; then
+	PRINT_USAGE
+	exit 1
+fi
+
 START_TIME=`date +%s`
 PRINT_TITLE
 #BUILD_MODULE
-CLEAN_ZIMAGEvictory_8G_defconfig
+CLEAN_ZIMAGE
 BUILD_KERNEL
 if [ "$3" = "mtd" ]; then
   if [ "$2" = "cleangb_mtd_noroot_defconfig" ]; then
