@@ -15,10 +15,17 @@ busybox ln -s /sbin/recovery /system/bin/busybox
 #busybox rm /sbin/su
 
 # Setup su binary
-busybox cp -f /sbin/su /system/bin/su
-chmod 6755 /system/bin/su
-busybox ln -s /system/bin/su /system/xbin/su
-busybox rm /sbin/su
+if [ ! -f /system/bin/su ]; then
+  busybox cp -f /sbin/su /system/bin/su
+  busybox ln -s /system/bin/su /system/xbin/su
+  busybox rm /sbin/su
+  chmod 6755 /system/bin/su
+  chown root.root /system/bin/su
+else
+  chmod 6755 /system/bin/su
+  chown root.root /system/bin/su
+fi
+
 
 #Remove superuser.apk
 #rm /system/app/Superuser.apk
