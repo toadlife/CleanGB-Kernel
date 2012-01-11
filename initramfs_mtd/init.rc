@@ -115,13 +115,6 @@ loglevel 3
     # ko files for bthid
     insmod /lib/modules/bthid.ko
 
-# SprintHotspot
-    insmod /lib/modules/hotspot_event_monitoring.ko
-
-    #temp
-    #chown root root /sbin/fat.format
-    #chmod 750 /sbin/fat.format
-
 on fs
 # mount mtd partitions
     # Mount /system rw first to give the filesystem a chance to save a checkpoint
@@ -189,6 +182,9 @@ on fs
     chmod 6755 /system/bin/su
     symlink /system/bin/busybox /system/xbin/busybox
     chmod 0644 /system/app/Superuser.apk
+    chown root system /sbin/remount
+    chmod 0755 /sbin/remount
+    
 
     # Remount system read only
     mount yaffs2 mtd@system /system ro remount	
