@@ -1,4 +1,4 @@
-#!/sbin/sh
+#!/system/bin/sh
 
 case $1 in
 ro)
